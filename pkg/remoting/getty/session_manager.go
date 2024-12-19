@@ -30,7 +30,6 @@ import (
 	gxsync "github.com/dubbogo/gost/sync"
 
 	"seata.apache.org/seata-go/pkg/discovery"
-	"seata.apache.org/seata-go/pkg/protocol/codec"
 	"seata.apache.org/seata-go/pkg/protocol/message"
 	"seata.apache.org/seata-go/pkg/remoting/config"
 	"seata.apache.org/seata-go/pkg/remoting/loadbalance"
@@ -53,15 +52,13 @@ type SessionManager struct {
 	seataConf *config.SeataConfig
 }
 
-func InitSessionManager(gettyConfig *config.Config, seataConfig *config.SeataConfig) {
-	config.InitConfig(seataConfig)
+func initSessionManager(gettyConfig *config.Config, seataConfig *config.SeataConfig) {
 	sessionManager = &SessionManager{
 		allSessions:    sync.Map{},
 		serverSessions: sync.Map{},
 		gettyConf:      gettyConfig,
 		seataConf:      seataConfig,
 	}
-	codec.Init()
 	sessionManager.init()
 }
 
